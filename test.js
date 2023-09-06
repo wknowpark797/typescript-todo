@@ -3,9 +3,7 @@ const input = document.querySelector('#title');
 const list = document.querySelector('#list');
 
 // 할 일 목록
-let data = localStorage.getItem('todoList');
-let tasks = data ? JSON.parse(data) : [];
-
+let tasks = JSON.parse(localStorage.getItem('todoList')) || [];
 tasks.map((task) => addListItem(task));
 
 form.addEventListener('submit', (e) => {
