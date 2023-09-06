@@ -15,8 +15,7 @@ form.addEventListener('submit', (e) => {
 	};
 	input.value = '';
 
-	tasks.push(newTask); // 할 일 목록 배열에 추가
-	console.log(tasks);
+	tasks = [newTask, ...tasks]; // 할 일 목록 배열에 추가
 
 	list.innerHTML = '';
 	tasks.map((task) => addListItem(task)); // 새로운 리스트 생성
@@ -27,7 +26,14 @@ function addListItem(task) {
 	const item = document.createElement('li');
 	const checkbox = document.createElement('input');
 	checkbox.type = 'checkbox';
-	item.append(checkbox, task.title);
 
+	// 동적으로 생성되는 체크박스 요소에 이벤트 핸들러를 연결하여 생성
+	// 이벤트 위임을 하지 않아도 동적인 요소에 이벤트를 연결하는 방법
+	checkbox.addEventListener('change', () => {
+		task.complete = checkbox.checked; // 객체에 complete 속성 추가
+		item.style.textDecoration = task.complete ? 'line-through' : 'none';
+	});
+
+	item.append(checkbox, task.title);
 	list.append(item);
 }
